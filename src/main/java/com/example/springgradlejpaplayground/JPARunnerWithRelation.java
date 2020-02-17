@@ -21,16 +21,12 @@ public class JPARunnerWithRelation implements ApplicationRunner {
 	public void run(ApplicationArguments args) throws Exception {
 		Session session = entityManager.unwrap(Session.class);
 		Member member = new Member();
-		Team team1 = new Team();
-		Team team2 = new Team();
+		Team team = new Team();
 
-		team1.setName("team1");
-		team2.setName("team2");
+		team.setName("team1");
 		member.setUsername("Irene");
-		member.addTeam(team1);
-		member.addTeam(team2);
+		member.addTeam(team);
 
-		session.save(team1);
-		session.save(member);
+		session.save(team);
 	}
 }
