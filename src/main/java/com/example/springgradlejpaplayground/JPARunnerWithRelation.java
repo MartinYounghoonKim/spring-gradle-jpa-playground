@@ -1,5 +1,6 @@
 package com.example.springgradlejpaplayground;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreType;
 import org.hibernate.Session;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -11,18 +12,27 @@ import javax.transaction.Transactional;
 
 @Component
 @Transactional
-public class JpaRunner implements ApplicationRunner {
+public class JPARunnerWithRelation implements ApplicationRunner {
 	@PersistenceContext
 	EntityManager entityManager;
 
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
-		Account account = new Account();
-
-		account.setUsername("Martin");
-		account.setPassword("martin");
-
 		Session session = entityManager.unwrap(Session.class);
-		session.save(account);
+		Member member = new Member();
+		Team team = new Team();
+
+		team.setName("team1");
+		session.save(team);
+
+		member.setUsername("Martin");
+		member.setTeam(team);
+		team.getMembers().add(member);
+
+		System.out.println();
+
+		session.save(team);
+		session.save(member);
+
 	}
 }

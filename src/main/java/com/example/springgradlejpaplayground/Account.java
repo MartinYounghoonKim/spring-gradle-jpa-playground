@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 @Entity
@@ -24,7 +25,7 @@ public class Account {
 	private String password;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	private LocalDate created;
+	private Date created;
 
 	@Transient // 컬럼으로 맵핑되지 않는다.
 	private Boolean no;
