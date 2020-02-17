@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Component
 @Transactional
@@ -20,19 +21,16 @@ public class JPARunnerWithRelation implements ApplicationRunner {
 	public void run(ApplicationArguments args) throws Exception {
 		Session session = entityManager.unwrap(Session.class);
 		Member member = new Member();
-		Team team = new Team();
+		Team team1 = new Team();
+		Team team2 = new Team();
 
-		team.setName("team1");
-		session.save(team);
+		team1.setName("team1");
+		team2.setName("team2");
+		member.setUsername("Irene");
+		member.addTeam(team1);
+		member.addTeam(team2);
 
-		member.setUsername("Martin");
-		member.setTeam(team);
-		team.getMembers().add(member);
-
-		System.out.println();
-
-		session.save(team);
+		session.save(team1);
 		session.save(member);
-
 	}
 }
